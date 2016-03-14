@@ -371,4 +371,3 @@ var YelpCategories_Genres = db.YelpCategories_Genres;
 //   .catch(function (err) {
 //     console.error(err);
 //   });
-

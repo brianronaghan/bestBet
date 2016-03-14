@@ -1,31 +1,39 @@
 // user queries
 var models = require('../config/db.js');
 var users = models.Users;
+var jwt = require( 'jwt-simple' );
 var Q = require('q');
 var bcrypt = require('bcrypt-nodejs');
 // add user
-var addUser = function (user) {
+var addUser = function (userDetails) {
   // CREATE USER IF DOESN'T EXIST
-  hashPass(user.password)
+  hashPass(userDetails.password)
     .then(function (hashed){
       users
-      // this isn't quite right - i only want to check the username,
-      // i want to add the other stuff after - because this might create a new user account if anything
-      // but the username is different.
-        .findOrCreate({where:
-          {userName: user.userName,
-          name: user.name,
-          email: user.email,
-          password: hashed}
+        .findOne({where:
+          {userName: userDetails.userName}
         })
-        .spread(function(user, created) {
-          if(created) {
-            return user;
+        .then(function(user){
+          if (user) {
+            response.send("account already exists, should redirect to login");
           } else {
-            return "account already exists, should redirect to login";
+            users.create({userName: user.userName,
+              name: user.name,
+              email: user.email,
+              salt: 153, // forgot how to salt
+              password: hashed,
+            })
+            .then(function (newUser) {
+              // add userDefaults to user_traits
+              updateUserInfo(newUser.userName, userDetails.traits)
+                .then(function (user) {
+                  return user;
+                });
+            });
           }
+        });
       });
-    });
+};
 // get if attampted password is correct for userName ...
 var checkPass = function (userName, attPass) {
   return function() {
@@ -51,6 +59,22 @@ var getUserInfo = function (userName) {
     });
 };
 
+var updateUserInfo = function (userId, newTraits) {
+  user_traits.findAll(
+    {where:{userId:userId}})
+      .then(function(traits){
+        traits.forEach(function(trait, index){
+          user_traits.update(
+            {traitId:newTraits[index]},
+            {where:{id:trait.id}}
+        })
+        .then(function(){
+          console.log("great!");
+        });
+      });
+};
+
+
 // functions used only here:
 var hashPass = function(pass){
   var cipher = Q.Promise(bcrypt.hash);
@@ -63,6 +87,7 @@ var hashPass = function(pass){
 
 module.exports = {
   getUserInfo: getUserInfo,
+  updateUserInfo: updateUserInfo,
   addUser: addUser,
   checkPass: checkPass
 };

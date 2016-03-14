@@ -14,14 +14,14 @@ app.post('/api/signin', authCtrl.signin );
 app.post('/api/signout', authCtrl.signout);
 
 // socket listeners
-io.on( 'connection' , function( socket ){
-  console.log( 'connection estab' );
+io.on( 'connection' , function(socket){
+  console.log('connection estab' );
   // WHEN user moves to a new zone:
-  socket.on( 'userMoved', function(userDetails) {
+  socket.on('userMoved', function(userDetails) {
     // listener recieves new zone # in userDetails(and knows socketId)
-    console.log( 'a user moved ', userDetails);
+    console.log('a user moved ', userDetails);
     // WE call the move function, with the details, which will handle updating and sending back the info:
-    userCtrl.setUserZone(userDetails);
+    userCtrl.setUserZone(socket,userDetails);
   });
   // WHEN user changes their default traits:
   socket.on('userChangedTraits', function (userDetails){
@@ -36,7 +36,7 @@ io.on( 'connection' , function( socket ){
     voteCtrl.registerVote(voteDetails);
   });
   // WHEN a user disconnects:
-  socket.on( 'disconnect', function() {
+  socket.on('disconnect', function() {
     console.log( 'a user left' );
   });
 
