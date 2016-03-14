@@ -7,9 +7,9 @@ var userCtrl = require('../users/userController.js');
 
 function signup (req, res) {
   userQueries.addUser(req.body.user)
-    .then(user){
-      // get the zoneNumber based on the user's lat and long
-      // sets user zones needed and sends the data back to the user
+    .then(){
+    //  get the zoneNumber based on the user's lat and long
+    //  sets user zones needed and sends the data back to the user
       userCtrl.setUserZone(null, req.body.zone);
     });
 };
