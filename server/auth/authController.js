@@ -1,15 +1,29 @@
 // auth controller
+var userQueries = require('../userQueries.js');
 
 function signup (req, res) {
-
+  userQueries.addUser(req.body.user);
 };
 
 function signin (req, res) {
-
+  userQueries.checkPass(req.body.userName, req.body.attPass)
+    .then(function (result){
+      if(result) {
+        userQueries.getUserInfo(userName)
+          .then(function (userDetails) {
+            // something with JWOT
+            // create connection?
+            // call zone handler?
+            // emit?
+          });
+      } else {
+        return "bad password";
+      }
+    });
 };
 
 function signout (req, res) {
-
+  // destroy token deal
 };
 
 module.exports = {
