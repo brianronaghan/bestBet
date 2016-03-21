@@ -142,8 +142,8 @@ var DisplayLatLng = React.createClass({
       var totes = 0;
        for (var x = 0; x < 3; x++) {
         if (this.state.establishments[estabId].traits[this.state.uPrefs[x]].votes>0) {
-          console.log("ind ",this.state.establishments[estabId].traits[this.state.uPrefs[x]].pos/
-            this.state.establishments[estabId].traits[this.state.uPrefs[x]].votes);
+          // console.log("ind ",this.state.establishments[estabId].traits[this.state.uPrefs[x]].pos/
+          //   this.state.establishments[estabId].traits[this.state.uPrefs[x]].votes);
           cume += 
           this.state.establishments[estabId].traits[this.state.uPrefs[x]].pos/
             this.state.establishments[estabId].traits[this.state.uPrefs[x]].votes
