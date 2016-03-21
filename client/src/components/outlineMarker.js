@@ -7,7 +7,7 @@ var {
 } = React;
 var styles = require('../assets/styles.js').markerStyles;
 
-var UserMarker = React.createClass({
+var OutlineMarker = React.createClass({
   getDefaultProps() {
     return {
       fontSize: 13,
@@ -20,4 +20,4 @@ var UserMarker = React.createClass({
   },
 });
 
-module.exports = UserMarker;
+module.exports = OutlineMarker;

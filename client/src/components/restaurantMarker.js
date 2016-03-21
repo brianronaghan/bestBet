@@ -230,16 +230,26 @@ var RestaurantMarkerView = React.createClass({
     this._runCommand('hideCallout', []);
   },
    _onPress: function(e) {
+    console.log("press working?");
     this.props.onPress && this.props.onPress(e);
   },
 
   render() {
     return (
-      <AIRMapMarker style={styles.container}
+      <AIRMapMarker 
         onPress={this._onPress}
         ref="marker"
         {...this.props}>
-          <View/>
+          <View style={testSurroundStyles['container']}>
+                <View style={testSurroundStyles[3]}>
+                  <View style = {testSurroundStyles[5]}>
+                  <View style = {testSurroundStyles[2]}>
+                  <View style = {dotStyles[0]}/>
+                  </View>
+                  </View>
+                  </View>
+
+                </View>
       </AIRMapMarker>
     );
   },
@@ -255,3 +265,122 @@ module.exports = RestaurantMarkerView;
 //         style={[styles.marker, this.props.style]}
 //         onPress={this._onPress}
 //       />
+
+var dotStyles = {
+  'container':{
+    justifyContent:'center',
+    alignContent: 'center'
+
+  },
+  0:{
+    backgroundColor: 'black',
+    opacity:1,
+    height:8,
+    width:8,
+    borderRadius: 4,
+    alignSelf: 'center'
+
+  },
+  1:{
+    backgroundColor: 'red',
+    opacity:1,
+    justifyContent: 'center',
+    height:8,
+    width:8,
+    borderRadius: 4,
+  },
+  2:{
+    backgroundColor: 'red',
+    opacity:1,
+    height:8,
+    width:8,
+    borderRadius: 4,
+        alignSelf: 'center'
+
+  },
+  3:{
+    backgroundColor: 'orange',
+    opacity:1,
+    justifyContent: 'center',
+    height:8,
+    width:8,
+    borderRadius: 4,
+    alignSelf: 'f'
+  },
+  4:{
+    backgroundColor: 'green',
+    opacity:1,
+    justifyContent: 'center',
+    height:12,
+    width:12,
+    borderRadius: 6,
+    alignSelf: 'flex-start'
+  },
+  5:{
+    backgroundColor: 'transparent',
+    opacity:1,
+    justifyContent: 'center',
+    height:18,
+    width:18,
+    borderRadius: 9,
+    alignSelf: 'center'
+  }
+};
+
+var testSurroundStyles = {
+  'container': {
+     justifyContent:'center',
+    alignContent: 'center'
+  },  
+
+  0:{
+    backgroundColor: 'black',
+    opacity:.3,
+    justifyContent: 'center',
+    height:16,
+    width:16,
+    borderRadius: 8,
+  },
+  1:{
+  },
+  2:{
+    height:150,
+    width:150,
+    borderRadius: 75,
+    backgroundColor:'transparent',
+    borderWidth:20,
+    alignSelf:'center',
+        justifyContent:'center',
+    alignContent: 'center',
+
+    borderColor: 'rgba(209, 0, 0, 0.2)',
+  },
+  3:{
+    height:90,
+    width:90,
+    borderRadius: 45,
+    justifyContent:'center',
+    alignContent: 'center',
+    backgroundColor:'transparent',
+    borderColor: 'rgba(194, 113, 0, 0.3)',
+    borderWidth:20,
+  },
+  4:{
+    backgroundColor: 'green',
+    opacity:.3,
+    justifyContent: 'center',
+    height:20,
+    width:20,
+    borderRadius: 10,
+  },
+  5:{
+    justifyContent: 'center',
+    height:30,
+    width:30,
+    backgroundColor:'transparent',
+    borderColor: 'rgba(34, 204, 0, 0.4)',
+    borderWidth:11,
+    borderRadius: 15,
+    alignSelf:'center'
+  }
+};

@@ -17,6 +17,7 @@ var RestaurantMarkerView = require('./restaurantMarker.js');
 var UserMarkerView = require('./userMarker.js');
 var OutlineMarkerView = require('./outlineMarker.js');
 var UserVotedView = require('./userVoted.js');
+var RestaurantSurroundView = require('./restaurantSurroundView.js');
 
 var votes = require('./dummyVotes.js').dummyVotes;
 var InfoCallout = require('./infoCallout');
@@ -135,6 +136,7 @@ var DisplayLatLng = React.createClass({
     } else {
       var cume = 0.0;
       var totes = 0;
+      console.log("estab: ",estabId);
        for (var x = 0; x < 3; x++) {
         if (this.state.establishments[estabId].traits[this.state.uPrefs[x]].votes>0) {
           console.log("ind ",this.state.establishments[estabId].traits[this.state.uPrefs[x]].pos/
@@ -145,6 +147,7 @@ var DisplayLatLng = React.createClass({
           totes++;
         } 
        }
+      console.log("tot ",estabId, ": ",Math.ceil(5*(cume/totes)));
     }
      return Math.floor(10*(cume/totes));   
   },
@@ -161,55 +164,55 @@ var DisplayLatLng = React.createClass({
           mapType="terrain"
           style={styles.map}
           initialRegion={this.state.region}
-
-          onRegionChange={this.onRegionChange}
-        >
+          onRegionChange={this.onRegionChange}>
+        
         <MapView.Marker coordinate={this.state.myLocation}>
           <UserMarkerView/>
         </MapView.Marker>
         <MapView.Marker coordinate={this.state.myLocation}>
           <OutlineMarkerView/>
         </MapView.Marker>
+
+
+
         {_.map(this.state.establishments, (establishment) => (
           
-          <MapView.Marker key={establishment.id} coordinate={establishment.coordinate}
-          centerOffset={{x:0,y:0}}
+          <MapView.Marker  key={establishment.id} 
+            coordinate={establishment.coordinate} 
             calloutOffset={{ x: 0, y: 0 }}
             calloutAnchor={{ x: 0, y: 0 }}
-            ref="m1"
-            style={this.calculateUserScores(establishment.id)}>
-
-          <MapView.Marker coordinate={this.state.myLocation}>
-            <UserVotedView/>
-          </MapView.Marker>
-
-            <RestaurantMarkerView 
-              coordinate={establishment.coordinate}
-              centerOffset={{x:0,y:0}}
+            ref="m1">
+            <RestaurantMarkerView coordinate={establishment.coordinate} 
               calloutOffset={{ x: 0, y: 0 }}
-              calloutAnchor={{ x: 0, y: 0}}
-              ref="m1"
-              style={dotStyles[this.calculateUserScores(establishment.id)]}/>
-
+              calloutAnchor={{ x: 0, y: 0 }}
+              ref="m1">
+              
             <MapView.Callout tooltip>
-              <InfoCallout>
-                <Text style={{ fontWeight:'bold', color: 'white' }}>
-                  {this.state.uPrefs[0]}:{establishment.traits[this.state.uPrefs[0]].pos}/{establishment.traits[this.state.uPrefs[0]].votes}
-                </Text>
-                <Text style={{ fontWeight:'bold', color: 'white' }}>
-                  {this.state.uPrefs[1]}:{establishment.traits[this.state.uPrefs[1]].pos}/{establishment.traits[this.state.uPrefs[1]].votes}
-                </Text>
-                <Text style={{ fontWeight:'bold', color: 'white' }}>
-                  {this.state.uPrefs[2]}:{establishment.traits[this.state.uPrefs[2]].pos}/{establishment.traits[this.state.uPrefs[2]].votes}
-                </Text>
-              </InfoCallout>
-            </MapView.Callout>
+                <InfoCallout>
+                  <Text style={{ fontWeight:'bold', color: 'white' }}>
+                    {this.state.uPrefs[0]}:{establishment.traits[this.state.uPrefs[0]].pos}/{establishment.traits[this.state.uPrefs[0]].votes}
+                  </Text>
+                  <Text style={{ fontWeight:'bold', color: 'white' }}>
+                    {this.state.uPrefs[1]}:{establishment.traits[this.state.uPrefs[1]].pos}/{establishment.traits[this.state.uPrefs[1]].votes}
+                  </Text>
+                  <Text style={{ fontWeight:'bold', color: 'white' }}>
+                    {this.state.uPrefs[2]}:{establishment.traits[this.state.uPrefs[2]].pos}/{establishment.traits[this.state.uPrefs[2]].votes}
+                  </Text>
+                </InfoCallout>
+              </MapView.Callout>
+
+            </RestaurantMarkerView>
+
           <Text style={{ fontWeight:'bold', fontSize: 12, color: 'black' }}>{establishment.id}:{establishment.name}</Text>
 
-        </MapView.Marker>
+          </MapView.Marker>
 
+          
           ))}
         </MapView>
+
+
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.changeTrait} style={[styles.bubble, styles.button]}>
             <Text style={{ fontSize: 9, fontWeight: 'bold' }}>Trait</Text>
@@ -239,17 +242,17 @@ module.exports = DisplayLatLng;
 
 var dotStyles = {
   0:{
-    backgroundColor: 'black ',
-    opacity:.5,
+    backgroundColor: 'black',
+    opacity:1,
     justifyContent: 'center',
-    height:12,
-    width:12,
-    borderRadius: 6,
+    height:8,
+    width:8,
+    borderRadius: 4,
     alignSelf: 'flex-start'
   },
   1:{
     backgroundColor: 'red',
-    opacity:.3,
+    opacity:1,
     justifyContent: 'center',
     height:8,
     width:8,
@@ -258,7 +261,7 @@ var dotStyles = {
   },
   2:{
     backgroundColor: 'red',
-    opacity:.7,
+    opacity:1,
     justifyContent: 'center',
     height:8,
     width:8,
@@ -266,7 +269,7 @@ var dotStyles = {
     alignSelf: 'flex-start'
   },
   3:{
-    backgroundColor: 'red',
+    backgroundColor: 'orange',
     opacity:1,
     justifyContent: 'center',
     height:8,
@@ -276,7 +279,7 @@ var dotStyles = {
   },
   4:{
     backgroundColor: 'green',
-    opacity:.7,
+    opacity:1,
     justifyContent: 'center',
     height:12,
     width:12,
@@ -285,21 +288,64 @@ var dotStyles = {
   },
   5:{
     backgroundColor: 'green',
-    opacity:.7,
+    opacity:1,
     justifyContent: 'center',
     height:18,
     width:18,
     borderRadius: 9,
     alignSelf: 'flex-start'
+  }
+};
+
+
+var surroundStyles = {
+  0:{
+    backgroundColor: 'black',
+    opacity:.3,
+    justifyContent: 'center',
+    height:16,
+    width:16,
+    borderRadius: 8,
+    alignSelf: 'flex-start'
   },
-  6:{
+  1:{
+  },
+  2:{
+    backgroundColor: 'red',
+    opacity:.6,
+    justifyContent: 'center',
+    height:30,
+    width:20,
+    borderRadius: 10,
+    alignSelf: 'flex-start'
+  },
+  3:{
+    backgroundColor: 'orange',
+    opacity:.4,
+    justifyContent: 'center',
+    height:30,
+    width:30,
+    borderRadius: 10,
+    alignSelf: 'flex-start'
+  },
+  4:{
     backgroundColor: 'green',
     opacity:.7,
     justifyContent: 'center',
-    height:24,
-    width:24,
-    borderRadius: 12,
+    height:20,
+    width:20,
+    borderRadius: 10,
+    alignSelf: 'flex-start'
+  },
+  5:{
+    backgroundColor: 'green',
+    opacity:.3,
+    justifyContent: 'center',
+    height:30,
+    width:30,
+    borderRadius: 15,
     alignSelf: 'flex-start'
   }
-};
-  
+};  
+
+

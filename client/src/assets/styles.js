@@ -141,12 +141,9 @@ var appStyles = StyleSheet.create({
 
 var markerStyles = StyleSheet.create({
   container: {
-    backgroundColor:'black',
-    justifyContent: 'center',
-     height:18,
-     width:18,
-     borderRadius: 9,
-    alignSelf: 'flex-start',
+     alignItems: 'center',
+     justifyContent: 'center'
+
   },
   me: {
     height:12,
@@ -160,9 +157,9 @@ var markerStyles = StyleSheet.create({
     height:12,
     width:12,
     borderRadius: 6,
-    backgroundColor:'white',
+    backgroundColor:'transparent',
     borderColor: 'black',
-    borderWidth:1,
+    borderWidth:2,
   },
    outline: {
     height:30,
@@ -170,7 +167,6 @@ var markerStyles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor:'blue',
     opacity:.3,
- 
   },
   dot: {
     flex: 0,
@@ -196,6 +192,17 @@ var markerStyles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 13,
   },
+  bubble: {
+     width:100,
+     height:100,
+      flexDirection: 'row',
+    alignSelf: 'flex-end',
+      backgroundColor: 'black',
+      opacity:.5,
+     paddingHorizontal: 0,
+     paddingVertical: 0,
+     borderRadius: 50,
+    },
   arrow: {
     backgroundColor: 'transparent',
     borderWidth: 4,
