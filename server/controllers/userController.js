@@ -12,9 +12,13 @@ var findUser = function(userName){
 var addUser = function (userDetails) {
   var cipher = Promise.promisify(bcrypt.hash);
   return cipher(userDetails.password, null,null).then(function(hash) {
+    console.log(hash);
     return Users.create({userName: userDetails.userName,
                          name: userDetails.name,
                          password: hash})
+      .then(function (result){
+        setUserTraits(result.dataValues.id, userDetails.traitCombo);
+      })
   });
 };
 
@@ -33,8 +37,8 @@ var getUserTraits = function(userId){
   return Users_Traits.findOne({where: {userId: userId}, attributes: ['traitCombo']});
 };
 
-var setUserTraits = function(data){
-  Users_Traits.findOrCreate({where: {userId: data.userId}, defaults:{traitCombo: data.traitCombo}})
+var setUserTraits = function(userId, userTraits){
+  Users_Traits.findOrCreate({where: {userId: userId}, defaults:{traitCombo: userTraits}})
               .spread(function(user, created) {
                 //If user already exists, update traits
                 if(!created){

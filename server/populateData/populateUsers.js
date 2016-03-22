@@ -22,9 +22,11 @@ var createFakeUsers = function(num) {
     user.password = firstNames[x%10];
     user.traitCombo = [Math.floor(Math.random()*3+1),Math.floor(Math.random()*3+4),Math.floor(Math.random()*3+7)].join('');
     userCtrl.addUser(user);
-    userCtrl.setUserTraits(user);
+      // userCtrl.setUserTraits(user);
+
     y--;
-  }
-};
+    }
+  };
+
 
 createFakeUsers(20);
