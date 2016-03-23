@@ -34,4 +34,18 @@ var createFakeUsers = function(num) {
   })
 };
 
-createFakeUsers(20);
+function createTest () {
+      var user = {};
+
+  user.name = 'H';
+  user.userName = 'H';
+  user.password = 'h';
+  userCtrl.addUser(user).then(function(newUser){
+          user.userId = newUser.id;
+          user.traitCombo = [Math.floor(Math.random()*3+1),Math.floor(Math.random()*3+4),Math.floor(Math.random()*3+7)].join('');
+          userCtrl.setUserTraits(user);
+        });
+};
+
+createTest();
+createFakeUsers(50);

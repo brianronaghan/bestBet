@@ -24,7 +24,6 @@ export function connectSocket(){
 
   socket.on('New Establishments', function({establishments,votes}){
     var state = {};
-    console.log("what i get back, "arguments);
     establishments.forEach(function(est){
       state[est.id] = est;
       var estVotes = votes.filter(function(vote){return vote.establishmentId === est.id});

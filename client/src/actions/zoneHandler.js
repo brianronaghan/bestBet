@@ -5,7 +5,6 @@ var NUM_OF_ROWS = 13;
 var NUM_OF_COLS = 22;
 
 var zoneCalculator = function(lat,long){
-  console.log("ZC L A L ", lat, long);
   var northLimit = 37.827747, //Northernmost latitude of SF
       southLimit = 37.700643, //Southernmost latitude of SF
       westLimit = -122.517591, //Westernmost longitude of SF
