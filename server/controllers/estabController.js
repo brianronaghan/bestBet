@@ -1,16 +1,11 @@
 var Establishments = require('../config/db').Establishments;
 var Votes = require('../config/db').Votes;
 var EstablishmentHistories = require('../config/db').EstablishmentHistories;
-
 var voteController = require('./voteController.js')
-
-
-
 
 // get all relevant establishment info in these zones
 // receives a userId, and a number of zones
 // returns a lot of stuff
-
 
 var getEstabsInZones = function(userId, zones, callback) {
   // Find all establishmenents in zones, and include last 24 hours of votes for each trait,
