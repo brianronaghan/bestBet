@@ -239,35 +239,15 @@ var markerStyles = StyleSheet.create({
 });
 
 var calloutStyles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-  },
   bubble: {
-    width:100,
-    height:100,
+    width: windowSize.width,
+    height: windowSize.height/9, 
     flexDirection: 'row',
     alignSelf: 'flex-start',
     backgroundColor: 'black',
     opacity:.5,
     paddingHorizontal: 0,
     paddingVertical: 0,
-    borderRadius: 50,
-  },
-  stats:{
-    alignSelf: 'flex-end'
-  },
-  dollar: {
-
-    //color: '#FFFFFF',
-    //fontSize: 10,
-  },
-  arrow: {
-    backgroundColor: 'transparent',
-    borderWidth: 4,
-    borderColor: 'transparent',
-    borderTopColor: 'black',
-    alignSelf: 'center',
-    marginTop: -9,
   }
 });
 

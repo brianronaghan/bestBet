@@ -103,6 +103,9 @@ export default class Map extends Component {
       establishments: [],
       isOpen: false,
       intervalId: -1,
+      selectedEstab: -1,
+      showSummary: false
+
     }
   }
   
@@ -125,6 +128,7 @@ export default class Map extends Component {
   }
 
   onRegionChange(region) {
+    console.log("R->",region);
     this.setState({ zone: this.calcZone()});
     this.setState({ userId: this.props.user.id });
 
@@ -162,6 +166,10 @@ export default class Map extends Component {
   }
 
   changeTrait() {
+    // console.log(estabId);
+    // this.setState({selectedEstab:estabId});
+    // this.setState({showSummary:true});
+    
     console.log("USE PROPS  --- ", this.props.user, "user");
     // this.setState({ uPrefs: uP });
     // this.setState({ establishments: this.props.establishments});
@@ -193,6 +201,11 @@ export default class Map extends Component {
       } 
     }
     return Math.round(cume/total*10);   
+  }
+  openModal (estabId) {
+    // console.log(estabId);
+    this.setState({selectedEstab:estabId});
+    this.setState({showSummary:true});
   }
 
   calculateLiveScores (estabId) {
@@ -267,7 +280,7 @@ export default class Map extends Component {
             coordinate={{latitude:establishment.latitude, longitude: establishment.longitude}}
             centerOffset={{x:0,y:0}}
             calloutOffset={{ x: 0, y: 0 }}
-            calloutAnchor={{ x: 0, y: 0 }}
+            calloutAnchor={{ x: 0, y: 0}}
             ref="m1">
             <View style={liveStyles[this.calculateLiveScores.call(this, establishment.id)]}>
               <View style={histStyles[this.calculateHistScores.call(this, establishment.id)]}>
@@ -302,6 +315,12 @@ export default class Map extends Component {
 
         ))}
         </MapView>
+        <TouchableOpacity style={styles.bubble} onPress={this.openModal.call(this,13)}>
+          <Text>Open</Text>  
+        </TouchableOpacity>
+        <View style={{backgroundColor: 'black'}}>
+          {this.state.showSummary ? <Summary establishment={this.props.establishments[this.state.selectedEstab]} /> : null }          
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.changeTrait.bind(this)} style={[styles.bubble, styles.button]}>
             <Text style={{ fontSize: 9, fontWeight: 'bold' }}>Trait</Text>
@@ -320,12 +339,25 @@ export default class Map extends Component {
           <Button style={styles.button} onPress={() => this.toggle()}>
             <Image source={{ uri: 'http://i.imgur.com/vKRaKDX.png', width: windowSize.height/20, height: windowSize.height/20, }} />   
           </Button>
-        </View> 
+        </View>
       </SideMenu>
+
     );
   }
 
 };
+
+var Summary = React.createClass({
+    render: function() {
+        return (
+            <View>
+              <Text> HI?</Text>
+            </View>
+        );
+    }
+});
+
+// {this.props.establishment.name}
 
 var userHW = 8;
 var userDot = {
